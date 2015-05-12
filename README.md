@@ -1,6 +1,6 @@
 # mruse
 
 ## Tools
-iftop
-nmon
-GoAccess
+* iftop
+* nmon
+* GoAccess
