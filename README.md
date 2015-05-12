@@ -1,17 +1,17 @@
 # mruse
 
 # DNS
-grep 202.106.0.20    /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 202.106.0.20' >> /etc/resolv.conf
-grep 219.141.136.10  /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 114.114.114.114' >> /etc/resolv.conf
-grep 114.114.114.114 /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 219.141.136.10' >> /etc/resolv.conf
-grep 8.8.8.8         /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
-grep 4.4.4.4         /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 4.4.4.4' >> /etc/resolv.conf
+grep 202.106.0.20    /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 202.106.0.20' >> /etc/resolv.conf    
+grep 219.141.136.10  /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 114.114.114.114' >> /etc/resolv.conf    
+grep 114.114.114.114 /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 219.141.136.10' >> /etc/resolv.conf    
+grep 8.8.8.8         /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 8.8.8.8' >> /etc/resolv.conf    
+grep 4.4.4.4         /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 4.4.4.4' >> /etc/resolv.conf    
 
 ## YUM
-release=$(cat /etc/issue|grep release|awk '{print int($3)}')
-[ "$release" -eq 5 ] && release=5.11
-[ "$release" -eq 5 ] && release=6.6
-curl http://mirrors.163.com/.help/CentOS${release}-Base-163.repo -o /etc/yum.repos.d/CentOS${release}-Base-163.repo
+release=$(cat /etc/issue|grep release|awk '{print int($3)}')     
+[ "$release" -eq 5 ] && release=5.11    
+[ "$release" -eq 5 ] && release=6.6    
+curl http://mirrors.163.com/.help/CentOS${release}-Base-163.repo -o /etc/yum.repos.d/CentOS${release}-Base-163.repo    
 
 ## init
 yum -y install parted dmidecode    
