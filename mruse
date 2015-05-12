@@ -33,4 +33,4 @@ yum -y install rkhunter chkrootkit tripwire
 # @todo: nmon
 # @todo: GoAccess
 # @todo: bash
-# @todo: ~/.vimrc
+# @todo: ~/.vimrc  # http://www.jianshu.com/p/a0b452f8f720
