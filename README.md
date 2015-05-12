@@ -7,13 +7,15 @@ grep 114.114.114.114 /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 219.141.
 grep 8.8.8.8         /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 8.8.8.8' >> /etc/resolv.conf    
 grep 4.4.4.4         /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 4.4.4.4' >> /etc/resolv.conf    
 
-## YUM
+## Distribution & Release
+distribution=$(cat /etc/redhat-release|awk '{print $1}')    
 release=$(cat /etc/issue|grep release|awk '{print int($3)}')     
 [ "$release" -eq 5 ] && release=5.11    
 [ "$release" -eq 5 ] && release=6.6    
-curl http://mirrors.163.com/.help/CentOS${release}-Base-163.repo -o /etc/yum.repos.d/CentOS${release}-Base-163.repo    
 
-## init
+## YUM init
+curl http://mirrors.163.com/.help/CentOS${release}-Base-163.repo -o /etc/yum.repos.d/CentOS${release}-Base-163.repo    
+yum -y update bash
 yum -y install parted dmidecode    
 yum -y install man ntp ntpdate screen chkconfig     
 yum -y install vixie-cron crontabs ftp vsftpd httpd memcached subversoin createrepo    
@@ -26,3 +28,4 @@ yum -y install rkhunter chkrootkit tripwire
 * iftop
 * nmon
 * GoAccess
+* bash
