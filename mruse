@@ -32,7 +32,7 @@ yum -y install rkhunter chkrootkit tripwire aide
 ## iftop
 yum -y install flex byacc libpcap libpcap-devel ncurses ncurses-devel
 wget http://me.mruse.cn/Server.soft/iftop-0.17.tar.gz -P /usr/local/src/
-tar --overwrite -zxvf /usr/local/src/ -C /usr/local/src/
+tar --overwrite -zxvf /usr/local/src/iftop-0.17.tar.gz -C /usr/local/src/
 cd /usr/local/src/iftop-0.17
 ./configure 
 make
