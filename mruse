@@ -29,7 +29,15 @@ yum -y install tcpdump telnet sysstat lsof strace iptraf iotop ifstat sar
 yum -y install rkhunter chkrootkit tripwire aide
 
 # Tools
-# @todo: iftop
+## iftop
+yum -y install flex byacc libpcap libpcap-devel ncurses ncurses-devel
+wget http://me.mruse.cn/Server.soft/iftop-0.17.tar.gz -P /usr/local/src/
+tar --overwrite -zxvf /usr/local/src/ -C /usr/local/src/
+cd /usr/local/src/iftop-0.17
+./configure 
+make
+make install
+
 # @todo: nmon
 # @todo: GoAccess
 # @todo: bash
