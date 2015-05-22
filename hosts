@@ -10,8 +10,8 @@ export PATH=$PATH
 source /etc/profile
 source ~/.bashrc
 
-INSTALLDIR="/usr/local/server"
-NGINX_CONF="$INSTALLDIR/nginx/conf/vhosts/"
+INSTALLDIR="/usr/local"
+NGINX_CONF="$INSTALLDIR/nginx/vhosts"
 
 [ "$1" == "" ] && for f in $NGINX_CONF/*.conf; do grep server_name $f|awk '{print $NF}'|tr -d ';'; done
 [ "$1" != "" -a "$2" == "" ] && for f in $NGINX_CONF/*.conf; do grep server_name $f|awk '{print $NF}'|tr -d ';'| sed 's#^#'$1' #g'; done
