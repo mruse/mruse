@@ -3,6 +3,9 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 export PATH=$PATH
 
+# Define
+SRC="/usr/local/src"
+
 # DNS
 grep 202.106.0.20 /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 202.106.0.20' >> /etc/resolv.conf
 grep 219.141.136.10 /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 114.114.114.114' >> /etc/resolv.conf
@@ -31,9 +34,9 @@ yum -y install rkhunter chkrootkit tripwire aide
 # Tools
 ## iftop
 yum -y install flex byacc libpcap libpcap-devel ncurses ncurses-devel
-wget http://me.mruse.cn/Server.soft/iftop-0.17.tar.gz -P /usr/local/src/
-tar --overwrite -zxvf /usr/local/src/iftop-0.17.tar.gz -C /usr/local/src/
-cd /usr/local/src/iftop-0.17
+wget http://me.mruse.cn/Server.soft/iftop-0.17.tar.gz -P $SRC/
+tar --overwrite -zxvf $SRC/iftop-0.17.tar.gz -C $SRC/
+cd $SRC/iftop-0.17
 ./configure 
 make
 make install
