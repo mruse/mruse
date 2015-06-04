@@ -3,7 +3,6 @@
 # @reference: http://www.vpser.net/manage/iftop.html
 
 SRC=/usr/local/src
-INSTALL=/usr/local
 
 # Dependence
 yum -y install flex byacc  libpcap ncurses ncurses-devel libpcap-devel
