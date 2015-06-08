@@ -33,13 +33,47 @@ yum -y install rkhunter chkrootkit tripwire aide
 
 # Tools
 ## iftop
-yum -y install flex byacc libpcap libpcap-devel ncurses ncurses-devel
-wget http://me.mruse.cn/Server.soft/iftop-0.17.tar.gz -P $SRC/
+wget http://www.ex-parrot.com/pdw/iftop/download/iftop-0.17.tar.gz -P $SRC/
 tar --overwrite -zxvf $SRC/iftop-0.17.tar.gz -C $SRC/
 cd $SRC/iftop-0.17
-./configure 
-make
-make install
+./configure
+make && make install
+
+# Env
+grep MrUse ~/.bashrc||cat >> ~/.bashrc <<BASHRC
+# @Start ~/.bashrc by MrUse
+## Color
+export red='\e[1;31m'
+export redbg='\e[1;41m'
+export blue='\e[1;34m'
+export bluebg='\e[1;44m'
+export green='\e[1;32m'
+export greenbg='\e[1;42m'
+export eol='\e[0m'
+
+## Alias
+alias wget="wget -c"
+alias grep='grep -v grep|grep '
+alias zip='zip -x *.DS_Store -x "*/\.*" -x "\.*"'
+alias tar='tar --exclude=*.DS_Store --exclude=Thumbs.db '
+# @end ~/.bashrc by MrUse
+BASHRC
+
+grep MrUse ~/.wgetrc||cat >> ~/.wgetrc <<WGETRC
+# @start ~/.wgetrc Create by me@mruse.cn $(date +%F_%T)
+Header=User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:37.0) Gecko/20100101 Firefox/37.0 Marked by MrUse
+Header=Referer: https://www.baidu.com/
+#http_proxy=""
+#ftp_proxy=""
+# @end ~/.wgetrc
+WGETRC
+
+grep MrUse ~/.curlrc||cat >> ~/.curlrc <<CURLRC
+# @start ~/.curlrc Create by me@mruse.cn $(date +%F_%T)
+User-Agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:37.0) Gecko/20100101 Firefox/37.0 Marked by MrUse"
+Header="X-Forwarded-For: https://www.baidu.com/"
+# @end ~/.curlrc
+CURLRC
 
 # @todo: nmon
 # @todo: GoAccess
