@@ -5,6 +5,16 @@ export PATH=$PATH
 
 # Define
 SRC="/usr/local/src"
+TimeZone="/usr/share/zoneinfo/Asia/Shanghai"
+
+# Timezone && Datetime
+netstat -antp|grep LISTEN|grep ntpd && /etc/init.d/ntpd stop
+chkconfig ntpd off
+[ -f /etc/localtime -a ! -f /etc/localtime.default ] && cp /etc/localtime /etc/localtime.default
+[ -f /etc/localtime -a -f $TimeZone ] && mv /etc/localtime /etc/localtime.$(date +%F_%T)
+[ -f $TimeZone ] && \cp $TimeZone /etc/localtime
+/usr/sbin/ntpdate us.pool.ntp.org
+hwclock --systohc
 
 # DNS
 grep 202.106.0.20 /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 202.106.0.20' >> /etc/resolv.conf
@@ -12,6 +22,16 @@ grep 219.141.136.10 /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 114.114.1
 grep 114.114.114.114 /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 219.141.136.10' >> /etc/resolv.conf
 grep 8.8.8.8 /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
 grep 4.4.4.4 /etc/resolv.conf >/dev/null 2>&1||echo 'nameserver 4.4.4.4' >> /etc/resolv.conf
+
+# Limits
+grep '# CmsTop Limits' /etc/security/limits.conf> /dev/null 2>&1 ||cat >> /etc/security/limits.conf <<LIMITS
+# CmsTop Limits $(date +%F_%T)
+*   soft    nproc   65535
+*   hard    nproc   65535
+*   soft    nofile  65535
+*   hard    nofile  65535
+LIMITS
+ulimit -HSn 65535
 
 # Distribution & Release
 distribution=$(cat /etc/redhat-release|awk '{print $1}')
@@ -39,7 +59,32 @@ cd $SRC/iftop-0.17
 ./configure
 make && make install
 
-# Env
+# Env & Charset
+[ -f /etc/sysconfig/i18n -a ! -f /etc/sysconfig/i18n.default ] && mv /etc/sysconfig/i18n /etc/sysconfig/i18n.default
+[ -f '/etc/sysconfig/i18n' ] && mv /etc/sysconfig/i18n /etc/sysconfig/i18n.$(date +%F_%T)
+cat > /etc/sysconfig/i18n <<I18N
+LANG="zh_CN.UTF-8"
+LC_ALL="zh_CN.UTF-8"
+LC_LANG="zh_CN.UTF-8"
+LC_CTYPE="zh_CN.UTF-8"
+LC_NUMERIC="zh_CN.UTF-8"
+LC_TIME="zh_CN.UTF-8"
+LC_COLLATE="zh_CN.UTF-8"
+LC_MONETARY="zh_CN.UTF-8"
+LC_MESSAGES="zh_CN.UTF-8"
+LC_PAPER="zh_CN.UTF-8"
+LC_NAME="zh_CN.UTF-8"
+LC_ADDRESS="zh_CN.UTF-8"
+LC_TELEPHONE="zh_CN.UTF-8"
+LC_MEASUREMENT="zh_CN.UTF-8"
+LC_IDENTIFICATION="zh_CN.UTF-8"
+SYSFONT="latarcyrheb-sun16"
+SUPPORTED="zh_CN:zh:en_US.UTF-8:en_US:en:zh_CN.GB18030"
+#SUPPORTED="zh_HK.UTF-8:zh_HK:zh:zh_CN.UTF-8:zh_CN:zh:zh_SG.UTF-8:zh_SG:zh:zh_TW.UTF-8:zh_TW:zh:en_US.UTF-8:en_US:en"
+#SYSFONT="lat0-sun16"
+I18N
+source /etc/sysconfig/i18n
+
 grep MrUse ~/.bashrc||cat >> ~/.bashrc <<BASHRC
 # @Start ~/.bashrc by MrUse
 ## Color
@@ -52,6 +97,7 @@ export greenbg='\e[1;42m'
 export eol='\e[0m'
 
 ## Alias
+alias vi="/usr/bin/vim"
 alias wget="wget -c"
 alias grep='grep -v grep|grep '
 alias zip='zip -x *.DS_Store -x "*/\.*" -x "\.*"'
